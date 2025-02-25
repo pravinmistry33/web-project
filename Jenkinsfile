@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "pravinmistry33/web-app"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/pravinmistry33/web-app.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t $IMAGE_NAME .'
+            }
+        }
+
+        stage('Push Image to DockerHub') {
+            steps {
+                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
+                    sh 'docker push $IMAGE_NAME'
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh '''
+                kubectl apply -f deployment.yaml
+                '''
+            }
+        }
+    }
+}
