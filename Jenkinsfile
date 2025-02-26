@@ -7,6 +7,13 @@ pipeline {
     }
 
     stages {
+        stage('Check Kubernetes Context') {
+            steps {
+                sh 'kubectl config use-context $KUBE_CONTEXT'
+                sh 'kubectl get pods --all-namespaces'
+            }
+        }
+        
         stage('Clone Repository') {
             steps {
                 script {
