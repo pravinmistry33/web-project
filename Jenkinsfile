@@ -12,7 +12,7 @@ pipeline {
                     checkout([$class: 'GitSCM',
                         branches: [[name: '*/master']], // Change branch if needed
                         userRemoteConfigs: [[
-                            url: 'https://github.com/pravinmistry33/web-app.git',
+                            url: 'https://github.com/pravinmistry33/web-project.git',
                             credentialsId: 'github-credentials' // Use the ID from Step 2
                         ]]
                     ])
