@@ -8,7 +8,15 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/pravinmistry33/web-app.git'
+                script {
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: '*/master']], // Change branch if needed
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/pravinmistry33/web-app.git',
+                            credentialsId: 'github-credentials' // Use the ID from Step 2
+                        ]]
+                    ])
+                }
             }
         }
 
