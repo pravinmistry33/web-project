@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "pravinmistry33/web-app"
-        KUBE_CONTEXT = "minikube" 
+        KUBE_CONTEXT = "docker-desktop" 
     }
 
     stages {
