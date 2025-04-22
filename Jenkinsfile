@@ -4,9 +4,16 @@ pipeline {
     environment {
         IMAGE_NAME = "pravinmistry33/web-app"
         KUBE_CONTEXT = "minikube" 
+        DOCKER_CONFIG = "${WORKSPACE}/.docker" // Clean Docker config location
     }
 
     stages {
+        stage('Setup Docker Config') {
+            steps {
+                sh 'mkdir -p $DOCKER_CONFIG && echo "{}" > $DOCKER_CONFIG/config.json'
+            }
+        }
+        
         stage('Check Kubernetes Context') {
             steps {
                 sh 'kubectl config use-context $KUBE_CONTEXT'
